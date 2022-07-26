@@ -54,6 +54,19 @@ public class players_attendence_list extends AppCompatActivity {
                 R.id.recyclerView);
         listener = new ClickListener() {
             @Override
+            public void click2(int index)
+            {
+                int i;
+                for (i = 0; i< list.size(); i++)
+                {
+                    if (list.get(i).getName().equals(playersList.get(i).getName()))
+                        break;
+                }
+                Intent intent = new Intent(players_attendence_list.this, PopUpDeletePlayer.class);
+                intent.putExtra("player", playersList.get(i));
+                startActivity(intent);
+            }
+            @Override
             public void click(int index){
                 Toast.makeText(players_attendence_list.this, "clicked item index is "+index,Toast.LENGTH_SHORT).show();
 

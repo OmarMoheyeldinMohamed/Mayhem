@@ -1,6 +1,7 @@
 package com.example.mayhem;
 
 import android.content.Context;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Collections;
 import java.util.List;
 
-public class Attendence_Adapter extends RecyclerView.Adapter<Attendence_View_Holder> {
+public class Attendence_List_Adapter extends RecyclerView.Adapter<Attendence_List_View_Holder> {
 
-    List<Attendence_Data> list
+    List<Attendence_list> list
             = Collections.emptyList();
 
     Context context;
     ClickListener listner;
 
-    public Attendence_Adapter(List<Attendence_Data> list,
-                                 Context context, ClickListener listiner)
+    public Attendence_List_Adapter(List<Attendence_list> list,
+                              Context context, ClickListener listiner)
     {
         this.list = list;
         this.context = context;
@@ -27,7 +28,7 @@ public class Attendence_Adapter extends RecyclerView.Adapter<Attendence_View_Hol
     }
 
     @Override
-    public Attendence_View_Holder
+    public Attendence_List_View_Holder
     onCreateViewHolder(ViewGroup parent,
                        int viewType)
     {
@@ -41,47 +42,39 @@ public class Attendence_Adapter extends RecyclerView.Adapter<Attendence_View_Hol
 
         View photoView
                 = inflater
-                .inflate(R.layout.oneitem_players_attendance,
+                .inflate(R.layout.oneitem_edit_players_attendence,
                         parent, false);
 
-        Attendence_View_Holder viewHolder
-                = new Attendence_View_Holder(photoView);
+        Attendence_List_View_Holder viewHolder
+                = new Attendence_List_View_Holder(photoView);
         return viewHolder;
     }
 
     @Override
     public void
-    onBindViewHolder(final Attendence_View_Holder viewHolder,
+    onBindViewHolder(final Attendence_List_View_Holder viewHolder,
                      final int position)
     {
         final int index = viewHolder.getAdapterPosition();
         viewHolder.PlayerName
                 .setText(list.get(position).Name);
         viewHolder.Attended
-                .setText(list.get(position).Attended);
-        viewHolder.Missed
-                .setText(list.get(position).Missed);
-        viewHolder.view.setOnClickListener(new View.OnClickListener() {
+                .setChecked(list.get(position).Attended);
+        viewHolder.Attended.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                listner.click(index, viewHolder.Attended.isChecked());
+            }
+        });
+
+        /*viewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
                 listner.click(index);
             }
-        });
-        viewHolder.view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                listner.click2(index);
-                return false;
-            }
-        });
-//        viewHolder.view.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                listner.click2(index);
-//                return true;
-//            }
-//        });
+        });*/
     }
 
     @Override

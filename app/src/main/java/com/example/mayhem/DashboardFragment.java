@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mayhem.databinding.FragmentDashboardBinding;
-import com.example.mayhem.ui.dashboard.DashboardViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,7 +60,16 @@ public class DashboardFragment extends Fragment {
         listener = new ClickListener() {
             @Override
             public void click(int index){
-                Toast.makeText(root.getContext(), "clicked item index is "+index,Toast.LENGTH_SHORT).show();
+                String PracticeDate = list.get(index).Name;
+                int i;
+                for (i =0; i< practiceList.size(); i++)
+                {
+                    if (practiceList.get(i).getDate().equals(PracticeDate))
+                        break;
+                }
+                Intent intent = new Intent(root.getContext(), attendence_list_per_training.class);
+                intent.putExtra("practice", practiceList.get(i));
+                startActivity(intent);
 
             }
         };

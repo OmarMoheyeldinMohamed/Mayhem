@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mayhem.databinding.FragmentHomeBinding;
-import com.example.mayhem.ui.home.HomeViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,8 +63,21 @@ public class HomeFragment extends Fragment {
                 R.id.recyclerView);
         listener = new ClickListener() {
             @Override
+            public void click2(int index)
+            {
+                int i;
+                for (i = 0; i< list.size(); i++)
+                {
+                    if (list.get(index).getName().equals(playersList.get(i).getName()))
+                        break;
+                }
+                Intent intent = new Intent(root.getContext(), PopUpDeletePlayer.class);
+                intent.putExtra("player", playersList.get(i));
+                startActivity(intent);
+            }
+            @Override
             public void click(int index){
-                Toast.makeText(root.getContext(), "clicked item index is "+index,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(root.getContext(),  "clicked item index is "+index,Toast.LENGTH_SHORT).show();
 
             }
         };
