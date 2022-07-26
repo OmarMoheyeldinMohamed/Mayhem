@@ -23,7 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class DashboardFragment extends Fragment {
@@ -61,8 +63,15 @@ public class DashboardFragment extends Fragment {
             @Override
             public void click2(int index)
             {
+                int i;
+                for (i = 0; i<list.size(); i++)
+                {
+                    if (list.get(index).getName().equals(practiceList.get(i).getDate()))
+                        break;
+                }
                 Intent intent = new Intent(root.getContext(), PopUpDeleteTraining.class);
-                intent.putExtra("training", practiceList.get(index));
+
+                intent.putExtra("training", practiceList.get(i));
                 startActivity(intent);
             }
             @Override
@@ -153,9 +162,25 @@ public class DashboardFragment extends Fragment {
                         numMissed = missed.size();
                     }
                     Attendence_Data data = new Attendence_Data(Date, String.valueOf(numAttended), String.valueOf(numMissed));
+                    int Day, Month, Year;
+                    Day = training.getDay();
+                    Month = training.getMonth();
+                    Year = training.getYear();
+                    data.setDay(Day);
+                    data.setMonth(Month);
+                    data.setYear(Year);
                     list.add(data);
 
                 }
+                list.sort(new Comparator<Attendence_Data>() {
+                    @Override
+                    public int compare(Attendence_Data lhs, Attendence_Data rhs) {
+                        // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+                        Calendar lhsCal = new GregorianCalendar(lhs.getYear(), lhs.getMonth(), lhs.getDay());
+                        Calendar rhsCal = new GregorianCalendar(rhs.getYear(), rhs.getMonth(), rhs.getDay());
+                        return lhsCal.compareTo(rhsCal);
+                    }
+                });
                 //adapter.list = list;
                 adapter.notifyDataSetChanged();
             }

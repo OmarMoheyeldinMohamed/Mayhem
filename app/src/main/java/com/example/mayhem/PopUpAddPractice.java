@@ -144,12 +144,12 @@ public class PopUpAddPractice extends AppCompatActivity {
 
         Calendar cal = Calendar.getInstance();
         Year = cal.get(Calendar.YEAR);
-        Month = cal.get(Calendar.MONTH);
+        Month = cal.get(Calendar.MONTH)+1;
         Day = cal.get(Calendar.DAY_OF_MONTH);
         int DayWeek = cal.get(Calendar.DAY_OF_WEEK);
 
         DateString = makeDateString(Day, Month, Year, DayWeek);
-        datePickerDialog = new DatePickerDialog(this, dateSetListener, Year, Month, Day);
+        datePickerDialog = new DatePickerDialog(this, dateSetListener, Year, Month-1, Day);
         //datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());
 
     }
