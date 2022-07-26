@@ -59,6 +59,13 @@ public class DashboardFragment extends Fragment {
                 R.id.recyclerView);
         listener = new ClickListener() {
             @Override
+            public void click2(int index)
+            {
+                Intent intent = new Intent(root.getContext(), PopUpDeleteTraining.class);
+                intent.putExtra("training", practiceList.get(index));
+                startActivity(intent);
+            }
+            @Override
             public void click(int index){
                 String PracticeDate = list.get(index).Name;
                 int i;

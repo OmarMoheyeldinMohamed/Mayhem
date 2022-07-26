@@ -34,7 +34,7 @@ public class PopUpDeletePlayer extends AppCompatActivity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width*0.9), (int) (height*0.35));
+        getWindow().setLayout((int)(width*0.9), (int) (height*0.4));
 
         player = (Player) getIntent().getSerializableExtra("player");
 
@@ -61,6 +61,7 @@ public class PopUpDeletePlayer extends AppCompatActivity {
                     missed = new ArrayList<>();
                 }
 
+
                 for (String x : attended)
                 {
                     databaseReference.child("practices").child(x).child("playersAttended").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -80,12 +81,16 @@ public class PopUpDeletePlayer extends AppCompatActivity {
                     });
 
                 }
-                int missed_size = missed.size();
-                int i = 0;
+//                int missed_size = missed.size();
+//                int i = 0;
+//                if (missed_size == 0)
+//                {
+//
+//                }
                 for (String x : missed)
                 {
-                    i++;
-                    int finalI = i;
+//                    i++;
+//                    int finalI = i;
                     databaseReference.child("practices").child(x).child("playersMissed").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -93,10 +98,10 @@ public class PopUpDeletePlayer extends AppCompatActivity {
                             List<String> practiceMissedList = snapshot.getValue(t);
                             practiceMissedList.remove(player.getID());
                             databaseReference.child("practices").child(x).child("playersMissed").setValue(practiceMissedList);
-                            if (finalI == missed_size)
-                            {
-                                PopUpDeletePlayer.this.finish();
-                            }
+//                            if (finalI == missed_size)
+//                            {
+//                                PopUpDeletePlayer.this.finish();
+//                            }
                         }
 
                         @Override
@@ -105,6 +110,7 @@ public class PopUpDeletePlayer extends AppCompatActivity {
                         }
                     });
                 }
+                PopUpDeletePlayer.this.finish();
 
             }
         });
