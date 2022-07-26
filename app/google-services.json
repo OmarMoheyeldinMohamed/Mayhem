@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "256089214991",
+    "project_id": "mayhem-8fd79",
+    "storage_bucket": "mayhem-8fd79.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256089214991:android:fbc24b6c88e635df22937a",
+        "android_client_info": {
+          "package_name": "com.example.mayhem"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "256089214991-am7fqv36abbibcfs3951fv76d94suh9j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADnELG_A8tsM-NqKAedlcGAdo9GApWsg8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "256089214991-am7fqv36abbibcfs3951fv76d94suh9j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,6 +14,24 @@
         android:theme="@style/Theme.Mayhem"
         tools:targetApi="31">
         <activity
+            android:name=".PopUpAddPractice"
+            android:exported="false"
+            android:theme="@style/Pop_style"/>
+        <activity
+            android:name=".attendence_main"
+            android:exported="false"
+            android:label="@string/title_activity_attendence_main" />
+        <activity
+            android:name=".PopUpAddPlayer"
+            android:exported="false"
+            android:theme="@style/Pop_style" />
+        <activity
+            android:name=".players_attendence_list"
+            android:exported="false" />
+        <activity
+            android:name=".payable_events"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
