@@ -3,14 +3,14 @@ package com.example.mayhem;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -39,9 +39,55 @@ public class HomeFragment extends Fragment {
     DatabaseReference databaseReference;
 
     List<Player> playersList;
+    int sort_counter = 0;
 
 
     private FragmentHomeBinding binding;
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        inflater.inflate(R.menu.sort_button, menu) ;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.action_sort:
+                if (sort_counter %2 == 0)
+                {
+                    list.sort(new Comparator<Attendence_Data>() {
+                        @Override
+                        public int compare(Attendence_Data o1, Attendence_Data o2) {
+                            return o1.getName().compareTo(o2.getName());
+                        }
+                    });
+                }
+                else
+                {
+                    list.sort(new Comparator<Attendence_Data>() {
+                        @Override
+                        public int compare(Attendence_Data lhs, Attendence_Data rhs) {
+                            // -1 - less than, 1 - greater than, 0 - equal, all inversed for descending
+                            int lhsNum = Integer.parseInt(lhs.getAttended());
+                            int rhsNum = Integer.parseInt(rhs.getAttended());
+                            if (lhsNum > rhsNum)
+                                return -1;
+                            else if (lhsNum < rhsNum)
+                                return 1;
+                            return 0;
+                        }
+                    });
+                }
+                sort_counter++;
+                adapter.notifyDataSetChanged();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -52,6 +98,8 @@ public class HomeFragment extends Fragment {
 
         list =  new ArrayList<>();
         playersList = new ArrayList<>();
+
+        setHasOptionsMenu(true);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
