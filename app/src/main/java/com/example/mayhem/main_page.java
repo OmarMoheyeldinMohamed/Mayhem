@@ -25,5 +25,13 @@ public class main_page extends AppCompatActivity {
             }
         });
 
+        Button treasuryBtn = (Button) findViewById(R.id.treasurybtn);
+        treasuryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(main_page.this, treasury_main.class));
+            }
+        });
+
     }
 }

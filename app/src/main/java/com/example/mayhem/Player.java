@@ -55,4 +55,6 @@ public class Player implements Serializable {
     public void setMissedTrainings(List<String> missedTrainings) {
         this.missedTrainings = missedTrainings;
     }
+
+
 }

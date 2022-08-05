@@ -12,5 +12,9 @@
     <string name="title_activity_attendence_main">attendence_main</string>
     <string name="title_home">Players</string>
     <string name="title_dashboard">Trainings</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_Payments">Payments</string>
+    <string name="title_activity_treasury_main">treasury_main</string>
+    <string name="add_payment">Add Payment</string>
+    <string name="name">Name:</string>
+    <string name="add">Add</string>
 </resources>

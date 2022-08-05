@@ -48,7 +48,27 @@ public class PopUpDeletePlayer extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference();
-                databaseReference.child("players").child(player.getID()).removeValue();
+                databaseReference.child(values.player_training).child(player.getID()).removeValue();
+                databaseReference.child("playerTreasury").child(player.getID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        PlayerTreasury playerTreasury = snapshot.getValue(PlayerTreasury.class);
+                        List<PaymentsDetails> payments = playerTreasury.getPaymentsForPlayer();
+                        if (payments == null )
+                            payments = new ArrayList<>();
+                        for (PaymentsDetails x : payments)
+                        {
+                            databaseReference.child("PaymentActivities").child(x.ID).child("players").child(player.getID()).removeValue();
+                        }
+
+                        databaseReference.child("playerTreasury").child(player.getID()).removeValue();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
                 List<String> attended, missed;
                 attended = player.getAttendedTrainings();
                 missed = player.getMissedTrainings();

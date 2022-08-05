@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class PlayersFragment extends Fragment {
 
     Attendence_Adapter adapter;
     RecyclerView recyclerView;
@@ -169,7 +169,7 @@ public class HomeFragment extends Fragment {
 //        list =  new ArrayList<>();
 //        playersList = new ArrayList<>();
 
-        databaseReference.child("players").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(values.player_training).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int i = 0;

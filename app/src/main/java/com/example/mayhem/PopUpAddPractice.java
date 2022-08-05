@@ -81,7 +81,7 @@ public class PopUpAddPractice extends AppCompatActivity {
                         String ID = databaseReference.child("practices").push().getKey();
 
 
-                        databaseReference.child("players").addListenerForSingleValueEvent(new ValueEventListener() {
+                        databaseReference.child(values.player_training).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 playersList.clear();
@@ -97,7 +97,7 @@ public class PopUpAddPractice extends AppCompatActivity {
                                     }
                                     missed.add(ID);
                                     player.setMissedTrainings(missed);
-                                    databaseReference.child("players").child(players.getKey()).setValue(player);
+                                    databaseReference.child(values.player_training).child(players.getKey()).setValue(player);
 
                                 }
                                 Training training = new Training(ID,DateString, Day, Month, Year, null, playersList);

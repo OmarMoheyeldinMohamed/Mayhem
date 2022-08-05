@@ -122,7 +122,7 @@ public class players_attendence_list extends AppCompatActivity {
 //        list =  new ArrayList<>();
 //        playersList = new ArrayList<>();
 
-        databaseReference.child("players").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(values.player_training).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int i = 0;

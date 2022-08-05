@@ -60,13 +60,13 @@ public class PopUpDeleteTraining extends AppCompatActivity {
 
                 for (String x : playersAttended)
                 {
-                    databaseReference.child("players").child(x).child("attendedTrainings").addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.child(values.player_training).child(x).child("attendedTrainings").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {};
                             List<String> playerAttendedList = snapshot.getValue(t);
                             playerAttendedList.remove(training.getID());
-                            databaseReference.child("players").child(x).child("attendedTrainings").setValue(playerAttendedList);
+                            databaseReference.child(values.player_training).child(x).child("attendedTrainings").setValue(playerAttendedList);
 
                         }
 
@@ -78,13 +78,13 @@ public class PopUpDeleteTraining extends AppCompatActivity {
                 }
                 for (String x : playersMissed)
                 {
-                    databaseReference.child("players").child(x).child("missedTrainings").addListenerForSingleValueEvent(new ValueEventListener() {
+                    databaseReference.child(values.player_training).child(x).child("missedTrainings").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             GenericTypeIndicator<List<String>> t = new GenericTypeIndicator<List<String>>() {};
                             List<String> playerMissedList = snapshot.getValue(t);
                             playerMissedList.remove(training.getID());
-                            databaseReference.child("players").child(x).child("missedTrainings").setValue(playerMissedList);
+                            databaseReference.child(values.player_training).child(x).child("missedTrainings").setValue(playerMissedList);
 
                         }
 

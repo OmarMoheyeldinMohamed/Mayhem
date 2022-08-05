@@ -59,7 +59,7 @@ public class attendence_list_per_training extends AppCompatActivity {
                 databaseReference.child("practices").child(practice.getID()).setValue(practice);
                 for (Player x : changedPlayers)
                 {
-                    databaseReference.child("players").child(x.getID()).setValue(x);
+                    databaseReference.child(values.player_training).child(x.getID()).setValue(x);
                 }
                 attendence_list_per_training.this.finish();
             }
@@ -143,7 +143,7 @@ public class attendence_list_per_training extends AppCompatActivity {
     {
         playersList.clear();
         list.clear();
-        databaseReference.child("players").addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(values.player_training).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot p : snapshot.getChildren())

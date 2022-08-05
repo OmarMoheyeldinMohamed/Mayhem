@@ -21,7 +21,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PopUpAddPlayer extends AppCompatActivity {
 
@@ -55,10 +57,11 @@ public class PopUpAddPlayer extends AppCompatActivity {
                     return;
                 }
                 Player player = new Player(Name, null, null);
+                PlayerTreasury playerTreasury = new PlayerTreasury(Name, "", 0, 0);
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
                 DatabaseReference databaseReference = firebaseDatabase.getReference();
 
-                databaseReference.child("players").orderByChild("name").equalTo(Name).addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReference.child(values.player_training).orderByChild("name").equalTo(Name).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Player p = snapshot.getValue(Player.class);
@@ -66,8 +69,12 @@ public class PopUpAddPlayer extends AppCompatActivity {
                             Toast.makeText(PopUpAddPlayer.this, "Player name already exists!", Toast.LENGTH_SHORT).show();
                             return;
                         } else {
-                            String ID = databaseReference.child("players").push().getKey();
+                            String ID = databaseReference.child(values.player_training).push().getKey();
                             player.setID(ID);
+                            playerTreasury.setID(ID);
+
+
+                            databaseReference.child("playerTreasury").child(ID).setValue(playerTreasury);
                             PlayerMissed.clear();
 
 
@@ -89,7 +96,7 @@ public class PopUpAddPlayer extends AppCompatActivity {
 
                                     }
                                     player.setMissedTrainings(PlayerMissed);
-                                    databaseReference.child("players").child(ID).setValue(player);
+                                    databaseReference.child(values.player_training).child(ID).setValue(player);
 
 
                                     //players_attendence_list activity = (players_attendence_list) PopUpAddPlayer.this.getCallingActivity();

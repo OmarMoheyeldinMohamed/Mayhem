@@ -23,8 +23,19 @@
         android:layout_height="64dp"
         android:text="Attendence"
         app:cornerRadius="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/treasurybtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <Button
+        android:id="@+id/treasurybtn"
+        android:layout_width="202dp"
+        android:layout_height="64dp"
+        android:text="Treasury"
+        app:cornerRadius="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/attendencebtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>
