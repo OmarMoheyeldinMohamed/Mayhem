@@ -75,7 +75,6 @@
         android:id="@+id/paid_everything"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_below="@+id/player_name"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"

@@ -67,7 +67,6 @@ public class PopUpAddPaymentActivity extends AppCompatActivity {
                 boolean allPlayers = aSwitch.isChecked();
 
                 Payment_activity paymentActivity = new Payment_activity(Name,0, priceInt);
-                paymentActivity.setParticipants(0);
 
 
                 FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -113,7 +112,6 @@ public class PopUpAddPaymentActivity extends AppCompatActivity {
                                                 playerTreasury.setPaymentsForPlayer(paymentsDetailsList);
                                                 databaseReference.child("playerTreasury").child(playerTreasury.getID()).setValue(playerTreasury);
                                             }
-                                            paymentActivity.setParticipants(list.size());
                                             Map<String, PlayerDetails>  map = new HashMap<>();
                                             for (PlayerDetails player : list)
                                             {

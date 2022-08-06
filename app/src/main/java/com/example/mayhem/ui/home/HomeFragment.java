@@ -19,9 +19,11 @@ import com.example.mayhem.Attendence_Adapter;
 import com.example.mayhem.ClickListener;
 import com.example.mayhem.PlayerTreasury;
 import com.example.mayhem.PlayerTreasuryAdapter;
+import com.example.mayhem.PopUpAddPlayer;
 import com.example.mayhem.PopUpDeletePlayer;
 import com.example.mayhem.R;
 import com.example.mayhem.databinding.FragmentHomeBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -62,6 +64,9 @@ public class HomeFragment extends Fragment {
             public void click2(int index)
             {
 
+                Intent intent = new Intent(root.getContext(), PopUpDeletePlayer.class);
+                intent.putExtra("player", list.get(index));
+                startActivity(intent);
             }
             @Override
             public void click(int index){
@@ -70,9 +75,49 @@ public class HomeFragment extends Fragment {
             }
         };
 
+
+
+        adapter
+                = new PlayerTreasuryAdapter(
+                list, root.getContext() ,listener);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(
+                new LinearLayoutManager(root.getContext()));
+
+
+        FloatingActionButton addPlayersBtn = (FloatingActionButton) root.findViewById(R.id.add_playersbtn);
+
+        addPlayersBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity((new Intent(root.getContext(), PopUpAddPlayer.class)));
+            }
+        });
+
+
+
+        return root;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        //binding = null;
+    }
+
+    @Override
+    public void onResume() {
+
+        super.onResume();
+        refresh();
+    }
+
+    public void refresh()
+    {
         databaseReference.child("playerTreasury").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
                 if (snapshot.getValue() == null)
                     return;
                 for (DataSnapshot player : snapshot.getChildren())
@@ -88,20 +133,5 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
-        adapter
-                = new PlayerTreasuryAdapter(
-                list, root.getContext() ,listener);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(
-                new LinearLayoutManager(root.getContext()));
-
-        return root;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        //binding = null;
     }
 }

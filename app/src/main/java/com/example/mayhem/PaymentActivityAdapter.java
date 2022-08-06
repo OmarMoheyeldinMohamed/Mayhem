@@ -55,7 +55,10 @@ public class PaymentActivityAdapter extends RecyclerView.Adapter<PaymentActivity
         viewHolder.PaymentName
                 .setText(list.get(position).activityName);
 
-        viewHolder.Participants.setText(String.valueOf(list.get(position).getParticipants()));
+        int participants = 0;
+        if (list.get(position).getPlayers() != null)
+            participants = list.get(position).getPlayers().size();
+        viewHolder.Participants.setText(String.valueOf(participants));
         int x = 0;
 
 

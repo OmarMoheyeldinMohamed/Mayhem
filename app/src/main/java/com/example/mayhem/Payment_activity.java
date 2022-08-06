@@ -55,7 +55,6 @@ public class Payment_activity {
     Map<String, PlayerDetails> players;
     int paidOutside;
     int defaultPrice;
-    int participants;
 
     public Payment_activity() {
     }
@@ -104,13 +103,5 @@ public class Payment_activity {
 
     public void setDefaultPrice(int defaultPrice) {
         this.defaultPrice = defaultPrice;
-    }
-
-    public int getParticipants() {
-        return participants;
-    }
-
-    public void setParticipants(int participants) {
-        this.participants = participants;
     }
 }
