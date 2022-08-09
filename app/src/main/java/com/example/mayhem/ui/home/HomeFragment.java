@@ -23,6 +23,7 @@ import com.example.mayhem.PopUpAddPlayer;
 import com.example.mayhem.PopUpDeletePlayer;
 import com.example.mayhem.R;
 import com.example.mayhem.databinding.FragmentHomeBinding;
+import com.example.mayhem.player_payments_list;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -70,6 +71,9 @@ public class HomeFragment extends Fragment {
             }
             @Override
             public void click(int index){
+                Intent intent = new Intent(root.getContext(), player_payments_list.class);
+                intent.putExtra("player", list.get(index));
+                startActivity(intent);
                 //Toast.makeText(root.getContext(),  "clicked item index is "+index,Toast.LENGTH_SHORT).show();
 
             }

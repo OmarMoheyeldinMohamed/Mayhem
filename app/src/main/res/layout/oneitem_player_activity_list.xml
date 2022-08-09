@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="105dp">
+
+
+    <TextView
+        android:id="@+id/activity_name"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="20dp"
+        android:maxLines="1"
+        android:text="Name"
+        android:textSize="16sp" />
+
+
+    <ImageView
+        android:id="@+id/money_pic"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/activity_name"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        app:srcCompat="@drawable/owe" />
+
+    <TextView
+        android:id="@+id/owed_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/activity_name"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/money_pic"
+        android:gravity="center"
+        android:text="Owed:"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/paid_pic"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_below="@+id/owed_text"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="7dp"
+        app:srcCompat="@drawable/money_logo" />
+
+    <TextView
+        android:id="@+id/paid_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/owed_text"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:layout_toEndOf="@+id/paid_pic"
+        android:gravity="center"
+        android:text="Paid:"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:id="@+id/border2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_alignParentBottom="true"
+        android:background="#808080"/>
+
+    <ImageView
+        android:id="@+id/paid_everything"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_below="@+id/activity_name"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="-5dp"
+        android:layout_marginEnd="20dp"
+        app:srcCompat="@drawable/check" />
+
+
+</RelativeLayout>

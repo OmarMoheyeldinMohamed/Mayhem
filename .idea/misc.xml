@@ -12,6 +12,7 @@
         <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/activity_main_page.xml" value="0.2" />
         <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/activity_payable_events.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/activity_player_payments_list.xml" value="0.264" />
         <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/activity_players_attendence_list.xml" value="0.264" />
         <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/activity_pop_up_add_payment.xml" value="0.25" />
         <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/activity_pop_up_add_player.xml" value="0.1" />
@@ -23,6 +24,7 @@
         <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/fragment_home.xml" value="0.10190217391304347" />
         <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/oneitem_edit_players_attendence.xml" value="0.25" />
         <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/oneitem_payment_activity.xml" value="0.24895833333333334" />
+        <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/oneitem_player_activity_list.xml" value="0.24895833333333334" />
         <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/oneitem_players_attendance.xml" value="0.264" />
         <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/oneitem_players_treasury.xml" value="0.2" />
         <entry key="..\:/Users/omar/AndroidStudioProjects/Mayhem/app/src/main/res/layout/payable_event_treasury.xml" value="0.24895833333333334" />
