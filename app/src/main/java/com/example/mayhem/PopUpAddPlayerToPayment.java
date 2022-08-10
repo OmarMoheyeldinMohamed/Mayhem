@@ -116,29 +116,32 @@ public class PopUpAddPlayerToPayment extends AppCompatActivity {
                 new LinearLayoutManager(this));
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("playerTreasury").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue() ==null)
-                    return;
-                for (DataSnapshot snapshot1 : snapshot.getChildren())
-                {
-                    PlayerTreasury playerTreasury = snapshot1.getValue(PlayerTreasury.class);
-                    if (paymentActivity.getPlayers().containsKey(playerTreasury.getName()))
+
+            databaseReference.child("playerTreasury").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getValue() ==null)
+                        return;
+                    for (DataSnapshot snapshot1 : snapshot.getChildren())
                     {
-                        continue;
+                        PlayerTreasury playerTreasury = snapshot1.getValue(PlayerTreasury.class);
+                        if (paymentActivity.getPlayers() != null && paymentActivity.getPlayers().containsKey(playerTreasury.getName()))
+                        {
+                            continue;
+                        }
+                        list.add(playerTreasury);
+                        checkedList.add(false);
+                        adapter.notifyDataSetChanged();
                     }
-                    list.add(playerTreasury);
-                    checkedList.add(false);
-                    adapter.notifyDataSetChanged();
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+
+
 
 
     }

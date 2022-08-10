@@ -62,8 +62,8 @@ public class PopUpDeletePlayerFromActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int paid = paymentActivity.getPlayers().get(playerTreasury.getName()).getAmountPaid();
                 int owed = paymentActivity.getPlayers().get(playerTreasury.getName()).getAmountOwed();
-                playerTreasury.setAmountOwed(playerDetails.getAmountOwed()-owed);
-                playerTreasury.setAmountPaid(playerDetails.getAmountPaid()-paid);
+                playerTreasury.setAmountOwed(playerTreasury.getAmountOwed()-owed);
+                playerTreasury.setAmountPaid(playerTreasury.getAmountPaid()-paid);
                 paymentActivity.getPlayers().remove(playerTreasury.getName());
                 int i =0;
                 for (i = 0; i < playerTreasury.getPaymentsForPlayer().size(); i++)

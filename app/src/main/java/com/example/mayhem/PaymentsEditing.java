@@ -43,10 +43,14 @@ public class PaymentsEditing extends AppCompatActivity {
 
 
         Map<String, PlayerDetails> oldValues =  new HashMap<>();
-        for (String name : paymentActivity.getPlayers().keySet())
+        if (paymentActivity.getPlayers() != null)
         {
-            oldValues.put(name, new PlayerDetails(paymentActivity.getPlayers().get(name)));
+            for (String name : paymentActivity.getPlayers().keySet())
+            {
+                oldValues.put(name, new PlayerDetails(paymentActivity.getPlayers().get(name)));
+            }
         }
+
 
         TextView Name = findViewById(R.id.activityName);
         TextView Paid = findViewById(R.id.amountPaid);
