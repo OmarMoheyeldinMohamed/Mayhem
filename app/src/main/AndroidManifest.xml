@@ -14,9 +14,13 @@
         android:theme="@style/Theme.Mayhem"
         tools:targetApi="31">
         <activity
+            android:name=".PopUpDeletePayment"
+            android:exported="false"
+            android:theme="@style/Pop_style" />
+        <activity
             android:name=".PopUpDeletePlayerFromActivity"
             android:exported="false"
-            android:theme="@style/Pop_style"/>
+            android:theme="@style/Pop_style" />
         <activity
             android:name=".PopUpAddPlayerToPayment"
             android:exported="false"

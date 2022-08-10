@@ -75,13 +75,13 @@ public class PaymentActivityAdapter extends RecyclerView.Adapter<PaymentActivity
                 listner.click(index);
             }
         });
-//        viewHolder.view.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View v) {
-//                listner.click2(index);
-//                return false;
-//            }
-//        });
+        viewHolder.view.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                listner.click2(index);
+                return false;
+            }
+        });
 //        viewHolder.view.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View v) {

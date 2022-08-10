@@ -21,6 +21,7 @@ import com.example.mayhem.PlayerTreasury;
 import com.example.mayhem.PlayerTreasuryAdapter;
 import com.example.mayhem.PopUpAddPaymentActivity;
 import com.example.mayhem.PopUpAddPractice;
+import com.example.mayhem.PopUpDeletePayment;
 import com.example.mayhem.R;
 import com.example.mayhem.databinding.FragmentDashboardBinding;
 import com.example.mayhem.player_payments_list;
@@ -65,7 +66,10 @@ public class DashboardFragment extends Fragment {
             @Override
             public void click2(int index)
             {
-
+                Payment_activity paymentActivity = list.get(index);
+                Intent i = new Intent(root.getContext(), PopUpDeletePayment.class);
+                i.putExtra("payment", paymentActivity);
+                startActivity(i);
             }
             @Override
             public void click(int index){
