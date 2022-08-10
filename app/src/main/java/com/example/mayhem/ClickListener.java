@@ -23,4 +23,8 @@ public class ClickListener {
         int x = index + 1;
         Log.i("works", "No");
     }
+    public void keyPressed(int keyCode,int index,  int choice, String text)
+    {
+
+    }
 }
