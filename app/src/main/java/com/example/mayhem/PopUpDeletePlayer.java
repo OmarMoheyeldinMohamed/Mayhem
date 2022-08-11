@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -154,6 +155,7 @@ public class PopUpDeletePlayer extends AppCompatActivity {
                         }
                     });
                 }
+                SystemClock.sleep(500);
                 PopUpDeletePlayer.this.finish();
 
             }

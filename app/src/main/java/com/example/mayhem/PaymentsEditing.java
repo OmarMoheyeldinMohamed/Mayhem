@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
@@ -63,7 +65,13 @@ public class PaymentsEditing extends AppCompatActivity {
         Save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int paidOutsideInt = Integer.parseInt(paidOutside.getText().toString());
+                int paidOutsideInt;
+                if (TextUtils.isEmpty(paidOutside.getText().toString()))
+                    paidOutsideInt = 0;
+                else
+                {
+                    paidOutsideInt = Integer.parseInt(paidOutside.getText().toString());
+                }
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
                 databaseReference.child("paymentActivity").child(paymentActivity.getID())
                         .child("paidOutside").setValue(paidOutsideInt);
@@ -120,6 +128,8 @@ public class PaymentsEditing extends AppCompatActivity {
                     });
                 }
                 Saveall.setEnabled(false);
+                SystemClock.sleep(300);
+                PaymentsEditing.this.finish();
             }
         });
         paidOutside.setOnKeyListener(new View.OnKeyListener() {
@@ -169,17 +179,30 @@ public class PaymentsEditing extends AppCompatActivity {
             public void keyPressed(int keyCode, int index, int choice, String text)
             {
                 if ((keyCode >= KeyEvent.KEYCODE_0 && keyCode <= KeyEvent.KEYCODE_9) || keyCode == KeyEvent.KEYCODE_DEL ||keyCode == KeyEvent.KEYCODE_FORWARD_DEL)
-                    Saveall.setEnabled(true);
 
-                if (choice == 0)
                 {
-                    int newOwed = Integer.parseInt(text);
-                    list.get(index).setAmountOwed(newOwed);
+                    Saveall.setEnabled(true);
+                    if (choice == 0)
+                    {
+                        int newOwed;
+                        if (TextUtils.isEmpty(text))
+                            newOwed =0;
+                        else
+                            newOwed= Integer.parseInt(text);
+                        list.get(index).setAmountOwed(newOwed);
+                    }
+                    else
+                    {
+                        int newPaid;
+                        if (TextUtils.isEmpty(text))
+                            newPaid =0;
+                        else
+                            newPaid = Integer.parseInt(text);
+                        list.get(index).setAmountPaid(newPaid);
+                    }
                 }
-                else
-                {
-                    list.get(index).setAmountPaid(Integer.parseInt(text));
-                }
+
+
             }
         };
 

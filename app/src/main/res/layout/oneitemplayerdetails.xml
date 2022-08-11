@@ -37,6 +37,7 @@
         android:layout_toEndOf="@+id/money_pic"
         android:gravity="center"
         android:text="Owed:"
+        android:inputType="number"
         android:textSize="14sp" />
 
     <ImageView
@@ -60,6 +61,7 @@
         android:layout_toEndOf="@+id/paid_pic"
         android:gravity="center"
         android:text="Paid:"
+        android:inputType="number"
         android:textSize="14sp" />
 
 

@@ -32,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -111,7 +112,6 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onResume() {
-
         super.onResume();
         refresh();
     }
@@ -128,8 +128,38 @@ public class HomeFragment extends Fragment {
                 {
                     PlayerTreasury p = player.getValue(PlayerTreasury.class);
                     list.add(p);
-                    adapter.notifyDataSetChanged();
                 }
+                list.sort(new Comparator<PlayerTreasury>() {
+                    @Override
+                    public int compare(PlayerTreasury o1, PlayerTreasury o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
+                list.sort(new Comparator<PlayerTreasury>() {
+                    @Override
+                    public int compare(PlayerTreasury o1, PlayerTreasury o2) {
+                        Integer o1size = (o1.getPaymentsForPlayer() == null)? 0 :o1.getPaymentsForPlayer().size();
+                        Integer o2size = (o2.getPaymentsForPlayer() == null)? 0 : o2.getPaymentsForPlayer().size();
+                        return o2size.compareTo(o1size);
+                    }
+                });
+                list.sort(new Comparator<PlayerTreasury>() {
+                    @Override
+                    public int compare(PlayerTreasury o1, PlayerTreasury o2) {
+                        Integer i1 =o1.getAmountPaid();
+                        Integer i2 = o2.getAmountPaid();
+                        return i2.compareTo(i1);
+                    }
+                });
+                list.sort(new Comparator<PlayerTreasury>() {
+                    @Override
+                    public int compare(PlayerTreasury o1, PlayerTreasury o2) {
+                        Integer i1 =o1.getAmountOwed();
+                        Integer i2 = o2.getAmountOwed();
+                        return i2.compareTo(i1);
+                    }
+                });
+                adapter.notifyDataSetChanged();
             }
 
             @Override
