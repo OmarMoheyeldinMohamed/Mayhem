@@ -16,12 +16,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mayhem.ClickListener;
 import com.example.mayhem.PaymentActivityAdapter;
 import com.example.mayhem.Payment_activity;
+import com.example.mayhem.PaymentsEditing;
 import com.example.mayhem.PlayerTreasury;
 import com.example.mayhem.PlayerTreasuryAdapter;
 import com.example.mayhem.PopUpAddPaymentActivity;
 import com.example.mayhem.PopUpAddPractice;
+import com.example.mayhem.PopUpDeletePayment;
 import com.example.mayhem.R;
 import com.example.mayhem.databinding.FragmentDashboardBinding;
+import com.example.mayhem.player_payments_list;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -63,12 +66,16 @@ public class DashboardFragment extends Fragment {
             @Override
             public void click2(int index)
             {
-
+                Payment_activity paymentActivity = list.get(index);
+                Intent i = new Intent(root.getContext(), PopUpDeletePayment.class);
+                i.putExtra("payment", paymentActivity);
+                startActivity(i);
             }
             @Override
             public void click(int index){
-                //Toast.makeText(root.getContext(),  "clicked item index is "+index,Toast.LENGTH_SHORT).show();
-
+                Intent intent = new Intent(root.getContext(), PaymentsEditing.class);
+                intent.putExtra("payment", list.get(index));
+                startActivity(intent);
             }
         };
 
@@ -109,6 +116,7 @@ public class DashboardFragment extends Fragment {
 
     public void refresh()
     {
+        list.clear();
         databaseReference.child("paymentActivity").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

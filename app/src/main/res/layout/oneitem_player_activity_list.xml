@@ -7,7 +7,7 @@
 
 
     <TextView
-        android:id="@+id/player_name"
+        android:id="@+id/activity_name"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -17,11 +17,12 @@
         android:text="Name"
         android:textSize="16sp" />
 
+
     <ImageView
         android:id="@+id/money_pic"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_below="@+id/player_name"
+        android:layout_below="@+id/activity_name"
         android:layout_marginStart="20dp"
         android:layout_marginTop="7dp"
         app:srcCompat="@drawable/owe" />
@@ -30,7 +31,7 @@
         android:id="@+id/owed_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/player_name"
+        android:layout_below="@+id/activity_name"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20dp"
@@ -75,9 +76,10 @@
         android:id="@+id/paid_everything"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_below="@+id/activity_name"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginTop="-5dp"
+        android:layout_marginEnd="20dp"
         app:srcCompat="@drawable/check" />
 
 

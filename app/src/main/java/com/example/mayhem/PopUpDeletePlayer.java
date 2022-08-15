@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -36,10 +37,34 @@ public class PopUpDeletePlayer extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*0.9), (int) (height*0.4));
 
-        player = (Player) getIntent().getSerializableExtra("player");
+        Object p;
+        p = (Object) getIntent().getSerializableExtra("player");
 
-        TextView textView = (TextView) findViewById(R.id.player_delete_name);
-        textView.setText(player.getName() + "?");
+        if (p.getClass() == PlayerTreasury.class)
+        {
+            PlayerTreasury playerTreasury = (PlayerTreasury) getIntent().getSerializableExtra("player");
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+            databaseReference.child(values.player_training).child(playerTreasury.getID()).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    player = snapshot.getValue(Player.class);
+                    TextView textView = (TextView) findViewById(R.id.player_delete_name);
+                    textView.setText(player.getName() + "?");
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+        else
+        {
+            player = (Player) getIntent().getSerializableExtra("player");
+            TextView textView = (TextView) findViewById(R.id.player_delete_name);
+            textView.setText(player.getName() + "?");
+        }
+
 
 
         Button confirmBtn = (Button) findViewById(R.id.confirm_button);
@@ -58,7 +83,7 @@ public class PopUpDeletePlayer extends AppCompatActivity {
                             payments = new ArrayList<>();
                         for (PaymentsDetails x : payments)
                         {
-                            databaseReference.child("PaymentActivities").child(x.ID).child("players").child(player.getID()).removeValue();
+                            databaseReference.child("paymentActivity").child(x.ID).child("players").child(player.getName()).removeValue();
                         }
 
                         databaseReference.child("playerTreasury").child(player.getID()).removeValue();
@@ -130,6 +155,7 @@ public class PopUpDeletePlayer extends AppCompatActivity {
                         }
                     });
                 }
+                SystemClock.sleep(500);
                 PopUpDeletePlayer.this.finish();
 
             }

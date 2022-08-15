@@ -1,8 +1,9 @@
 package com.example.mayhem;
 
+import java.io.Serializable;
 import java.util.List;
 
-class PaymentsDetails{
+class PaymentsDetails implements Serializable {
     String Name, ID;
 
     public PaymentsDetails() {
@@ -29,7 +30,7 @@ class PaymentsDetails{
         this.ID = ID;
     }
 }
-public class PlayerTreasury {
+public class PlayerTreasury implements Serializable{
     String Name, ID;
     List<PaymentsDetails> paymentsForPlayer;
     int amountPaid, amountOwed;

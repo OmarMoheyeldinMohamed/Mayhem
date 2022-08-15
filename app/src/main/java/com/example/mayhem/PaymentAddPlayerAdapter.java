@@ -10,23 +10,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Collections;
 import java.util.List;
 
-public class PaymentActivityAdapter extends RecyclerView.Adapter<PaymentActivityViewHolder> {
+public class PaymentAddPlayerAdapter extends RecyclerView.Adapter<PaymentAddPlayerViewHolder> {
 
-    List<Payment_activity> list
+    List<PlayerTreasury> list
             = Collections.emptyList();
 
     Context context;
     ClickListener listner;
 
-    public PaymentActivityAdapter(List<Payment_activity> list,
-                                 Context context, ClickListener listiner) {
+    public PaymentAddPlayerAdapter(List<PlayerTreasury> list,
+                                  Context context, ClickListener listiner) {
         this.list = list;
         this.context = context;
         this.listner = listiner;
     }
 
     @Override
-    public PaymentActivityViewHolder
+    public PaymentAddPlayerViewHolder
     onCreateViewHolder(ViewGroup parent,
                        int viewType) {
 
@@ -39,35 +39,31 @@ public class PaymentActivityAdapter extends RecyclerView.Adapter<PaymentActivity
 
         View photoView
                 = inflater
-                .inflate(R.layout.oneitem_payment_activity,
+                .inflate(R.layout.oneitemaddplayer,
                         parent, false);
 
-        PaymentActivityViewHolder viewHolder
-                = new PaymentActivityViewHolder(photoView);
+        PaymentAddPlayerViewHolder viewHolder
+                = new PaymentAddPlayerViewHolder(photoView);
         return viewHolder;
     }
 
     @Override
     public void
-    onBindViewHolder(final PaymentActivityViewHolder viewHolder,
+    onBindViewHolder(final PaymentAddPlayerViewHolder viewHolder,
                      final int position) {
         final int index = viewHolder.getAdapterPosition();
-        viewHolder.PaymentName
-                .setText(list.get(position).activityName);
+        viewHolder.PlayerName
+                .setText(list.get(position).getName());
 
 
-        viewHolder.Participants.setText(String.valueOf(list.get(position).getNumberofParticipants()));
+        viewHolder.add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listner.click(index, viewHolder.add.isChecked());
+            }
+        });
 
-        viewHolder.AmountPaid
-                .setText(String.valueOf(list.get(position).getAmountPaid()));
 
-        int owed = list.get(position).getAmountOwed();
-        viewHolder.AmountDue
-                .setText(String.valueOf(owed));
-        if (owed == 0) {
-            viewHolder.PaidEverything.setImageResource(R.drawable.check);
-        } else
-            viewHolder.PaidEverything.setImageResource(R.drawable.cross);
 
         viewHolder.view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,13 +71,13 @@ public class PaymentActivityAdapter extends RecyclerView.Adapter<PaymentActivity
                 listner.click(index);
             }
         });
-        viewHolder.view.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                listner.click2(index);
-                return false;
-            }
-        });
+//        viewHolder.view.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                listner.click2(index);
+//                return false;
+//            }
+//        });
 //        viewHolder.view.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
 //            public boolean onLongClick(View v) {

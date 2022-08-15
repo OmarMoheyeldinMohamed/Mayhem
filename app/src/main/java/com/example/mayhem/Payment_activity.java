@@ -1,14 +1,23 @@
 package com.example.mayhem;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-class PlayerDetails
+class PlayerDetails implements Serializable
 {
     String ID, name;
     int amountPaid, amountOwed;
 
     public PlayerDetails() {
+    }
+
+    public PlayerDetails(PlayerDetails player)
+    {
+        this.ID = player.getID();
+        this.name = player.getName();
+        this.amountOwed = player.getAmountOwed();
+        this.amountPaid = player.getAmountPaid();
     }
 
     public PlayerDetails(String ID, String name, int amountPaid, int amountOwed) {
@@ -17,6 +26,7 @@ class PlayerDetails
         this.amountPaid = amountPaid;
         this.amountOwed = amountOwed;
     }
+
 
     public String getID() {
         return ID;
@@ -50,12 +60,12 @@ class PlayerDetails
         this.amountOwed = amountOwed;
     }
 }
-public class Payment_activity {
+
+public class Payment_activity implements Serializable {
     String activityName, ID;
     Map<String, PlayerDetails> players;
     int paidOutside;
     int defaultPrice;
-    int participants;
 
     public Payment_activity() {
     }
@@ -106,11 +116,40 @@ public class Payment_activity {
         this.defaultPrice = defaultPrice;
     }
 
-    public int getParticipants() {
+    public int getNumberofParticipants()
+    {
+        int participants = 0;
+        if (players != null)
+            participants = players.size();
         return participants;
     }
 
-    public void setParticipants(int participants) {
-        this.participants = participants;
+    public int getAmountPaid()
+    {
+        int x = 0;
+        if (players == null)
+            return x+paidOutside;
+
+        for (PlayerDetails p : players.values())
+        {
+            x += p.getAmountPaid();
+        }
+        x += paidOutside;
+        return x;
     }
+
+
+    public int getAmountOwed()
+    {
+        int x = 0;
+        if (players == null)
+            return x;
+
+        for (PlayerDetails p : players.values())
+        {
+            x += p.getAmountOwed();
+        }
+        return x;
+    }
+
 }

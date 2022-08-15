@@ -19,9 +19,12 @@ import com.example.mayhem.Attendence_Adapter;
 import com.example.mayhem.ClickListener;
 import com.example.mayhem.PlayerTreasury;
 import com.example.mayhem.PlayerTreasuryAdapter;
+import com.example.mayhem.PopUpAddPlayer;
 import com.example.mayhem.PopUpDeletePlayer;
 import com.example.mayhem.R;
 import com.example.mayhem.databinding.FragmentHomeBinding;
+import com.example.mayhem.player_payments_list;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
@@ -62,32 +66,21 @@ public class HomeFragment extends Fragment {
             public void click2(int index)
             {
 
+                Intent intent = new Intent(root.getContext(), PopUpDeletePlayer.class);
+                intent.putExtra("player", list.get(index));
+                startActivity(intent);
             }
             @Override
             public void click(int index){
+                Intent intent = new Intent(root.getContext(), player_payments_list.class);
+                intent.putExtra("player", list.get(index));
+                startActivity(intent);
                 //Toast.makeText(root.getContext(),  "clicked item index is "+index,Toast.LENGTH_SHORT).show();
 
             }
         };
 
-        databaseReference.child("playerTreasury").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue() == null)
-                    return;
-                for (DataSnapshot player : snapshot.getChildren())
-                {
-                    PlayerTreasury p = player.getValue(PlayerTreasury.class);
-                    list.add(p);
-                    adapter.notifyDataSetChanged();
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         adapter
                 = new PlayerTreasuryAdapter(
@@ -96,6 +89,18 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(
                 new LinearLayoutManager(root.getContext()));
 
+
+        FloatingActionButton addPlayersBtn = (FloatingActionButton) root.findViewById(R.id.add_playersbtn);
+
+        addPlayersBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity((new Intent(root.getContext(), PopUpAddPlayer.class)));
+            }
+        });
+
+
+
         return root;
     }
 
@@ -103,5 +108,64 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         //binding = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        refresh();
+    }
+
+    public void refresh()
+    {
+        databaseReference.child("playerTreasury").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                if (snapshot.getValue() == null)
+                    return;
+                for (DataSnapshot player : snapshot.getChildren())
+                {
+                    PlayerTreasury p = player.getValue(PlayerTreasury.class);
+                    list.add(p);
+                }
+                list.sort(new Comparator<PlayerTreasury>() {
+                    @Override
+                    public int compare(PlayerTreasury o1, PlayerTreasury o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
+                list.sort(new Comparator<PlayerTreasury>() {
+                    @Override
+                    public int compare(PlayerTreasury o1, PlayerTreasury o2) {
+                        Integer o1size = (o1.getPaymentsForPlayer() == null)? 0 :o1.getPaymentsForPlayer().size();
+                        Integer o2size = (o2.getPaymentsForPlayer() == null)? 0 : o2.getPaymentsForPlayer().size();
+                        return o2size.compareTo(o1size);
+                    }
+                });
+                list.sort(new Comparator<PlayerTreasury>() {
+                    @Override
+                    public int compare(PlayerTreasury o1, PlayerTreasury o2) {
+                        Integer i1 =o1.getAmountPaid();
+                        Integer i2 = o2.getAmountPaid();
+                        return i2.compareTo(i1);
+                    }
+                });
+                list.sort(new Comparator<PlayerTreasury>() {
+                    @Override
+                    public int compare(PlayerTreasury o1, PlayerTreasury o2) {
+                        Integer i1 =o1.getAmountOwed();
+                        Integer i2 = o2.getAmountOwed();
+                        return i2.compareTo(i1);
+                    }
+                });
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

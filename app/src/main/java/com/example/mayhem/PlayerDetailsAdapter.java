@@ -1,7 +1,7 @@
 package com.example.mayhem;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,16 +11,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.Collections;
 import java.util.List;
 
-public class PlayerTreasuryAdapter extends RecyclerView.Adapter<PlayerTreasuryViewHolder> {
+public class PlayerDetailsAdapter extends RecyclerView.Adapter<PlayerDetailsViewHolder> {
 
-    List<PlayerTreasury> list
+    List<PlayerDetails> list
             = Collections.emptyList();
 
     Context context;
     ClickListener listner;
 
-    public PlayerTreasuryAdapter(List<PlayerTreasury> list,
-                              Context context, ClickListener listiner)
+    public PlayerDetailsAdapter(List<PlayerDetails> list,
+                                 Context context, ClickListener listiner)
     {
         this.list = list;
         this.context = context;
@@ -28,7 +28,7 @@ public class PlayerTreasuryAdapter extends RecyclerView.Adapter<PlayerTreasuryVi
     }
 
     @Override
-    public PlayerTreasuryViewHolder
+    public PlayerDetailsViewHolder
     onCreateViewHolder(ViewGroup parent,
                        int viewType)
     {
@@ -42,22 +42,22 @@ public class PlayerTreasuryAdapter extends RecyclerView.Adapter<PlayerTreasuryVi
 
         View photoView
                 = inflater
-                .inflate(R.layout.oneitem_players_treasury,
+                .inflate(R.layout.oneitemplayerdetails,
                         parent, false);
 
-        PlayerTreasuryViewHolder viewHolder
-                = new PlayerTreasuryViewHolder(photoView);
+        PlayerDetailsViewHolder viewHolder
+                = new PlayerDetailsViewHolder(photoView);
         return viewHolder;
     }
 
     @Override
     public void
-    onBindViewHolder(final PlayerTreasuryViewHolder viewHolder,
+    onBindViewHolder(final PlayerDetailsViewHolder viewHolder,
                      final int position)
     {
         final int index = viewHolder.getAdapterPosition();
         viewHolder.PlayerName
-                .setText(list.get(position).Name);
+                .setText(list.get(position).name);
 
         viewHolder.AmountDue
                 .setText(String.valueOf(list.get(position).getAmountOwed()));
@@ -82,6 +82,20 @@ public class PlayerTreasuryAdapter extends RecyclerView.Adapter<PlayerTreasuryVi
             @Override
             public boolean onLongClick(View v) {
                 listner.click2(index);
+                return false;
+            }
+        });
+        viewHolder.AmountDue.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                listner.keyPressed(keyCode, index,0, viewHolder.AmountDue.getText().toString());
+                return false;
+            }
+        });
+        viewHolder.AmountPaid.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                listner.keyPressed(keyCode, index, 1, viewHolder.AmountPaid.getText().toString());
                 return false;
             }
         });
