@@ -14,6 +14,10 @@
         android:theme="@style/Theme.Mayhem"
         tools:targetApi="31">
         <activity
+            android:name=".PopUpEditOwed"
+            android:exported="false"
+            android:theme="@style/Pop_style"/>
+        <activity
             android:name=".PopUpDeletePayment"
             android:exported="false"
             android:theme="@style/Pop_style" />

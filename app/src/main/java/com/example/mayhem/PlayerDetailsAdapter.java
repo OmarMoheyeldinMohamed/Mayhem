@@ -13,18 +13,20 @@ import java.util.List;
 
 public class PlayerDetailsAdapter extends RecyclerView.Adapter<PlayerDetailsViewHolder> {
 
+    private final List<Boolean> enable;
     List<PlayerDetails> list
             = Collections.emptyList();
 
     Context context;
     ClickListener listner;
 
-    public PlayerDetailsAdapter(List<PlayerDetails> list,
+    public PlayerDetailsAdapter(List<PlayerDetails> list,List<Boolean> enable,
                                  Context context, ClickListener listiner)
     {
         this.list = list;
         this.context = context;
         this.listner = listiner;
+        this.enable = enable;
     }
 
     @Override
@@ -56,15 +58,23 @@ public class PlayerDetailsAdapter extends RecyclerView.Adapter<PlayerDetailsView
                      final int position)
     {
         final int index = viewHolder.getAdapterPosition();
+
+        viewHolder.payBtn.setEnabled(this.enable.get(position));
         viewHolder.PlayerName
                 .setText(list.get(position).name);
 
         viewHolder.AmountDue
                 .setText(String.valueOf(list.get(position).getAmountOwed()));
+        viewHolder.AmountDue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listner.owedPressed(position);
+            }
+        });
         viewHolder.AmountPaid
                 .setText(String.valueOf(list.get(position).getAmountPaid()));
         int d = 0;
-        if (list.get(position).getAmountOwed()==0)
+        if (list.get(position).getAmountOwed()<=0)
         {
             viewHolder.PaidEverything.setImageResource(R.drawable.check);
         }
@@ -85,18 +95,35 @@ public class PlayerDetailsAdapter extends RecyclerView.Adapter<PlayerDetailsView
                 return false;
             }
         });
-        viewHolder.AmountDue.setOnKeyListener(new View.OnKeyListener() {
+
+
+//        viewHolder.AmountDue.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                listner.keyPressed(keyCode, index,0, viewHolder.AmountDue.getText().toString());
+//                return false;
+//            }
+//        });
+//        viewHolder.AmountPaid.setOnKeyListener(new View.OnKeyListener() {
+//            @Override
+//            public boolean onKey(View v, int keyCode, KeyEvent event) {
+//                listner.keyPressed(keyCode, index, 1, viewHolder.AmountPaid.getText().toString());
+//                return false;
+//            }
+//        });
+
+        viewHolder.payAmount.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                listner.keyPressed(keyCode, index,0, viewHolder.AmountDue.getText().toString());
+                listner.keyPressed(keyCode, index,0, viewHolder.payAmount.getText().toString());
                 return false;
             }
         });
-        viewHolder.AmountPaid.setOnKeyListener(new View.OnKeyListener() {
+
+        viewHolder.payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                listner.keyPressed(keyCode, index, 1, viewHolder.AmountPaid.getText().toString());
-                return false;
+            public void onClick(View v) {
+                listner.click3(index);
             }
         });
 //        viewHolder.view.setOnLongClickListener(new View.OnLongClickListener() {

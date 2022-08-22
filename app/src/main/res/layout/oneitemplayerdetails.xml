@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="80dp">
+    android:layout_height="110dp">
 
 
     <TextView
@@ -26,18 +26,18 @@
         android:layout_marginTop="10dp"
         app:srcCompat="@drawable/owe" />
 
-    <EditText
+    <TextView
         android:id="@+id/owed_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/player_name"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:layout_toEndOf="@+id/money_pic"
         android:gravity="center"
-        android:text="Owed:"
         android:inputType="number"
+        android:text="Owed:"
         android:textSize="14sp" />
 
     <ImageView
@@ -50,18 +50,31 @@
         android:layout_marginTop="10dp"
         app:srcCompat="@drawable/money_logo" />
 
-    <EditText
+    <TextView
         android:id="@+id/paid_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/player_name"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:layout_toEndOf="@+id/paid_pic"
         android:gravity="center"
-        android:text="Paid:"
         android:inputType="number"
+        android:text="Paid:"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/pay_edit"
+        android:layout_width="56dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/paid_pic"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:inputType="numberSigned|number"
+        android:text=""
         android:textSize="14sp" />
 
 
@@ -82,6 +95,15 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         app:srcCompat="@drawable/check" />
+
+    <Button
+        android:id="@+id/paybtn"
+        android:layout_width="76dp"
+        android:layout_height="43dp"
+        android:layout_below="@id/paid_pic"
+        android:layout_toEndOf="@id/pay_edit"
+        android:text="Pay"
+        android:enabled="false"/>
 
 
 </RelativeLayout>

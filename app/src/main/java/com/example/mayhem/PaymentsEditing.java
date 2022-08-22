@@ -32,6 +32,9 @@ public class PaymentsEditing extends AppCompatActivity {
 
     Payment_activity paymentActivity;
     List<PlayerDetails> list;
+    List<Integer> paying;
+    List<Boolean> enable;
+
 
     PlayerDetailsAdapter adapter;
     RecyclerView recyclerView;
@@ -79,6 +82,7 @@ public class PaymentsEditing extends AppCompatActivity {
             }
         });
 
+        /*
         Saveall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -132,6 +136,10 @@ public class PaymentsEditing extends AppCompatActivity {
                 PaymentsEditing.this.finish();
             }
         });
+
+         */
+
+
         paidOutside.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -149,12 +157,20 @@ public class PaymentsEditing extends AppCompatActivity {
         paidOutside.setText(String.valueOf(paymentActivity.getPaidOutside()));
 
         list = new ArrayList<>();
+        paying = new ArrayList<>();
+        enable = new ArrayList<>();
+
 
         Map<String, PlayerDetails> map = paymentActivity.getPlayers();
 
         if (map!=null)
         {
             list.addAll(map.values());
+        }
+        for (int i =0; i<list.size();i++)
+        {
+            paying.add(0);
+            enable.add(false);
         }
 
 
@@ -172,7 +188,77 @@ public class PaymentsEditing extends AppCompatActivity {
                 startActivity(i);
             }
             @Override
-            public void click(int index) {
+            public void click3(int index) {
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+                Map<String, Integer> changedOwed = new HashMap<>(), changedPaid = new HashMap<>();
+
+
+
+                    if (paying.get(index) != 0)
+                    {
+                        int owed = list.get(index).getAmountOwed();
+                        int paid = list.get(index).getAmountPaid();
+                        owed -= paying.get(index);
+                        paid += paying.get(index);
+                        list.get(index).setAmountOwed(owed);
+                        list.get(index).setAmountPaid(paid);
+
+
+                        changedOwed.put(list.get(index).getID(), owed);
+                        changedPaid.put(list.get(index).getID(), paid);
+
+
+                        databaseReference.child("paymentActivity").child(paymentActivity.getID()).child("players").setValue(paymentActivity.getPlayers());
+                        for (String ID : changedOwed.keySet())
+                        {
+                            databaseReference.child("playerTreasury").child(ID).child("amountOwed").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Integer oldOwed = snapshot.getValue(Integer.class);
+                                    int differenceOwed = list.get(index).getAmountOwed() - oldValues.get(list.get(index).getName()).getAmountOwed();
+                                    int newOwed = oldOwed + differenceOwed;
+                                    oldValues.get(list.get(index).getName()).setAmountOwed(changedOwed.get(list.get(index).getID()));
+                                    databaseReference.child("playerTreasury").child(ID).child("amountOwed").setValue(newOwed);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+
+                        for (String ID : changedPaid.keySet())
+                        {
+                            databaseReference.child("playerTreasury").child(ID).child("amountPaid").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Integer oldPaid = snapshot.getValue(Integer.class);
+                                    int differencePaid = list.get(index).getAmountPaid() - oldValues.get(list.get(index).getName()).getAmountPaid();
+                                    int newPaid = oldPaid + differencePaid;
+                                    oldValues.get(list.get(index).getName()).setAmountPaid(changedPaid.get(list.get(index).getID()));
+                                    databaseReference.child("playerTreasury").child(ID).child("amountPaid").setValue(newPaid);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                        }
+
+                        View v = recyclerView.getLayoutManager().findViewByPosition(index);
+                        TextView vv = (TextView) v.findViewById(R.id.pay_edit);
+                        vv.setText("");
+
+                        enable.set(index, false);
+                        adapter.notifyDataSetChanged();
+
+
+                    }
+
+
+
                 //Toast.makeText(root.getContext(),  "clicked item index is "+index,Toast.LENGTH_SHORT).show();
             }
             @Override
@@ -181,34 +267,56 @@ public class PaymentsEditing extends AppCompatActivity {
                 if ((keyCode >= KeyEvent.KEYCODE_0 && keyCode <= KeyEvent.KEYCODE_9) || keyCode == KeyEvent.KEYCODE_DEL ||keyCode == KeyEvent.KEYCODE_FORWARD_DEL)
 
                 {
-                    Saveall.setEnabled(true);
-                    if (choice == 0)
-                    {
-                        int newOwed;
-                        if (TextUtils.isEmpty(text))
-                            newOwed =0;
-                        else
-                            newOwed= Integer.parseInt(text);
-                        list.get(index).setAmountOwed(newOwed);
-                    }
+                    enable.set(index, true);
+                    View v = recyclerView.getLayoutManager().findViewByPosition(index);
+                    v.findViewById(R.id.paybtn).setEnabled(true);
+
+                    int pay;
+                    if (TextUtils.isEmpty(text))
+                        pay = 0;
+                    else if (text.equals("-"))
+                        return;
                     else
-                    {
-                        int newPaid;
-                        if (TextUtils.isEmpty(text))
-                            newPaid =0;
-                        else
-                            newPaid = Integer.parseInt(text);
-                        list.get(index).setAmountPaid(newPaid);
-                    }
+                        pay = Integer.parseInt(text);
+                    paying.set(index, pay);
+
+//                    if (choice == 0)
+//                    {
+//                        int newOwed;
+//                        if (TextUtils.isEmpty(text))
+//                            newOwed =0;
+//                        else
+//                            newOwed= Integer.parseInt(text);
+//                        list.get(index).setAmountOwed(newOwed);
+//                    }
+//                    else
+//                    {
+//                        int newPaid;
+//                        if (TextUtils.isEmpty(text))
+//                            newPaid =0;
+//                        else
+//                            newPaid = Integer.parseInt(text);
+//                        list.get(index).setAmountPaid(newPaid);
+//                    }
                 }
 
 
+            }
+
+            @Override
+            public void owedPressed(int index)
+            {
+                PlayerDetails playerDetails = list.get(index);
+                Intent i = new Intent(PaymentsEditing.this, PopUpEditOwed.class);
+                i.putExtra("payment", paymentActivity);
+                i.putExtra("player", playerDetails);
+                startActivity(i);
             }
         };
 
         adapter
                 = new PlayerDetailsAdapter(
-                list, this ,listener);
+                list,enable, this ,listener);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(
                 new LinearLayoutManager(this));

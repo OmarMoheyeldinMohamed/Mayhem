@@ -156,7 +156,15 @@ public class HomeFragment extends Fragment {
                     public int compare(PlayerTreasury o1, PlayerTreasury o2) {
                         Integer i1 =o1.getAmountOwed();
                         Integer i2 = o2.getAmountOwed();
-                        return i2.compareTo(i1);
+                        return i1.compareTo(i2);
+                    }
+                });
+                list.sort(new Comparator<PlayerTreasury>() {
+                    @Override
+                    public int compare(PlayerTreasury o1, PlayerTreasury o2) {
+                        Boolean i1 =o1.getAmountOwed() <= 0;
+                        Boolean i2 = o2.getAmountOwed() <= 0;
+                        return i1.compareTo(i2);
                     }
                 });
                 adapter.notifyDataSetChanged();

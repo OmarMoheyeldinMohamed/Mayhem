@@ -64,7 +64,7 @@ public class PlayerTreasuryAdapter extends RecyclerView.Adapter<PlayerTreasuryVi
         viewHolder.AmountPaid
                 .setText(String.valueOf(list.get(position).getAmountPaid()));
         int d = 0;
-        if (list.get(position).getAmountOwed()==0)
+        if (list.get(position).getAmountOwed() <= 0)
         {
             viewHolder.PaidEverything.setImageResource(R.drawable.check);
         }

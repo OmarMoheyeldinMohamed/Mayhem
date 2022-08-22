@@ -1,6 +1,7 @@
 package com.example.mayhem;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class PlayerDetailsViewHolder extends RecyclerView.ViewHolder {
     TextView PlayerName;
-    EditText AmountDue, AmountPaid;
+    TextView AmountDue, AmountPaid;
+    EditText payAmount;
+    Button payBtn;
     ImageView PaidEverything;
     View view;
 
@@ -20,9 +23,12 @@ public class PlayerDetailsViewHolder extends RecyclerView.ViewHolder {
                 = (TextView)itemView
                 .findViewById(R.id.player_name);
         AmountDue
-                = (EditText) itemView
+                = (TextView) itemView
                 .findViewById(R.id.owed_text);
-        AmountPaid = (EditText) itemView.findViewById(R.id.paid_text);
+        AmountPaid = (TextView) itemView.findViewById(R.id.paid_text);
+        payBtn = (Button) itemView.findViewById(R.id.paybtn);
+        payAmount = (EditText) itemView.findViewById(R.id.pay_edit);
+
         PaidEverything = (ImageView) itemView.findViewById(R.id.paid_everything);
         view  = itemView;
     }

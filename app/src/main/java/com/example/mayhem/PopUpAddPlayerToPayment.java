@@ -110,7 +110,7 @@ public class PopUpAddPlayerToPayment extends AppCompatActivity {
 
         adapter
                 = new PaymentAddPlayerAdapter(
-                list, this ,listener);
+                list,checkedList, this ,listener);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(
                 new LinearLayoutManager(this));

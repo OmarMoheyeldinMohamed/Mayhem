@@ -14,13 +14,15 @@ public class PaymentAddPlayerAdapter extends RecyclerView.Adapter<PaymentAddPlay
 
     List<PlayerTreasury> list
             = Collections.emptyList();
+    List<Boolean> checkedList;
 
     Context context;
     ClickListener listner;
 
-    public PaymentAddPlayerAdapter(List<PlayerTreasury> list,
+    public PaymentAddPlayerAdapter(List<PlayerTreasury> list,List<Boolean> checkedList,
                                   Context context, ClickListener listiner) {
         this.list = list;
+        this.checkedList = checkedList;
         this.context = context;
         this.listner = listiner;
     }
@@ -54,6 +56,8 @@ public class PaymentAddPlayerAdapter extends RecyclerView.Adapter<PaymentAddPlay
         final int index = viewHolder.getAdapterPosition();
         viewHolder.PlayerName
                 .setText(list.get(position).getName());
+
+        viewHolder.add.setChecked(checkedList.get(index));
 
 
         viewHolder.add.setOnClickListener(new View.OnClickListener() {

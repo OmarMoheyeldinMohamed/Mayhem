@@ -23,6 +23,14 @@ public class ClickListener {
         int x = index + 1;
         Log.i("works", "No");
     }
+    public void click3(int index)
+    {
+
+    }
+    public void owedPressed(int index)
+    {
+
+    }
     public void keyPressed(int keyCode,int index,  int choice, String text)
     {
 
