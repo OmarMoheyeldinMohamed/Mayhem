@@ -23,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -172,6 +173,23 @@ public class PaymentsEditing extends AppCompatActivity {
             paying.add(0);
             enable.add(false);
         }
+
+        list.sort(new Comparator<PlayerDetails>() {
+            @Override
+            public int compare(PlayerDetails o1, PlayerDetails o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+
+        list.sort(new Comparator<PlayerDetails>() {
+            @Override
+            public int compare(PlayerDetails o1, PlayerDetails o2) {
+                Boolean b1, b2;
+                b1 = o1.getAmountOwed() <= 0;
+                b2 = o2.getAmountOwed() <= 0;
+                return b1.compareTo(b2);
+            }
+        });
 
 
         recyclerView
