@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -28,10 +30,16 @@ public class player_payments_list extends AppCompatActivity {
     ClickListener listener;
     PlayerTreasury player;
 
+    ProgressBar progressBar;
+    int size = 0;
+    int current;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_payments_list);
+
+        progressBar = findViewById(R.id.progressBar);
 
 
         player = (PlayerTreasury) getIntent().getSerializableExtra("player");
@@ -77,6 +85,9 @@ public class player_payments_list extends AppCompatActivity {
         if (paymentsDetails == null)
             paymentsDetails = new ArrayList<>();
 
+        size = paymentsDetails.size();
+        current = 0;
+
         for (PaymentsDetails payment : paymentsDetails)
         {
             String ID = payment.getID();
@@ -88,6 +99,9 @@ public class player_payments_list extends AppCompatActivity {
                     paymentsList.add(paymentActivity);
                     list.add(new PlayerPaymentsData(paymentActivity.getActivityName(), paymentActivity.getID(),
                             paymentActivity.getPlayers().get(player.getName()).getAmountPaid(), paymentActivity.getPlayers().get(player.getName()).getAmountOwed() ));
+
+                    if (++current ==size)
+                        progressBar.setVisibility(View.GONE);
                     adapter.notifyDataSetChanged();
                 }
 
@@ -97,6 +111,7 @@ public class player_payments_list extends AppCompatActivity {
                 }
             });
         }
+
 
 
     }

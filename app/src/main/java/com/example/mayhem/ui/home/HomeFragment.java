@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +23,6 @@ import com.example.mayhem.PlayerTreasuryAdapter;
 import com.example.mayhem.PopUpAddPlayer;
 import com.example.mayhem.PopUpDeletePlayer;
 import com.example.mayhem.R;
-import com.example.mayhem.databinding.FragmentHomeBinding;
 import com.example.mayhem.player_payments_list;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -46,6 +46,8 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView;
     ClickListener listener;
 
+    ProgressBar progressBar;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         //binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -55,6 +57,8 @@ public class HomeFragment extends Fragment {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
+
+        progressBar = root.findViewById(R.id.progressBar);
 
         //refresh();
 
@@ -118,12 +122,17 @@ public class HomeFragment extends Fragment {
 
     public void refresh()
     {
+        progressBar.setVisibility(View.VISIBLE);
+
         databaseReference.child("playerTreasury").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
                 if (snapshot.getValue() == null)
+                {
+                    progressBar.setVisibility(View.GONE);
                     return;
+                }
                 for (DataSnapshot player : snapshot.getChildren())
                 {
                     PlayerTreasury p = player.getValue(PlayerTreasury.class);
@@ -167,6 +176,7 @@ public class HomeFragment extends Fragment {
                         return i1.compareTo(i2);
                     }
                 });
+                progressBar.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
             }
 

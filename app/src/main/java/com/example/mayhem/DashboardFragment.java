@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,10 @@ public class DashboardFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
 
+
+    ProgressBar progressBar;
+
+
     List<Training> practiceList;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -55,6 +60,8 @@ public class DashboardFragment extends Fragment {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
+
+        progressBar = root.findViewById(R.id.progressBar);
 
         recyclerView
                 = (RecyclerView) root.findViewById(
@@ -129,6 +136,9 @@ public class DashboardFragment extends Fragment {
 //        list =  new ArrayList<>();
 //        playersList = new ArrayList<>();
 
+        progressBar.setVisibility(View.VISIBLE);
+
+
         databaseReference.child("practices").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -182,6 +192,7 @@ public class DashboardFragment extends Fragment {
                     }
                 });
                 //adapter.list = list;
+                progressBar.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
             }
 

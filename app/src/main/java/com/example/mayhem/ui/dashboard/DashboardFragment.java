@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,6 +47,8 @@ public class DashboardFragment extends Fragment {
     RecyclerView recyclerView;
     ClickListener listener;
 
+    ProgressBar progressBar;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
@@ -56,6 +59,8 @@ public class DashboardFragment extends Fragment {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
+
+        progressBar = root.findViewById(R.id.progressBar);
 
         //refresh();
 
@@ -108,8 +113,6 @@ public class DashboardFragment extends Fragment {
 
     @Override
     public void onResume() {
-
-
         super.onResume();
         refresh();
     }
@@ -117,6 +120,7 @@ public class DashboardFragment extends Fragment {
     public void refresh()
     {
         list.clear();
+        progressBar.setVisibility(View.VISIBLE);
         databaseReference.child("paymentActivity").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -128,6 +132,7 @@ public class DashboardFragment extends Fragment {
                     list.add(paymentActivity);
                     adapter.notifyDataSetChanged();
                 }
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override

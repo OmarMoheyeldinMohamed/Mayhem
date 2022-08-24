@@ -8,6 +8,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -40,6 +41,8 @@ public class PlayersFragment extends Fragment {
 
     List<Player> playersList;
     int sort_counter = 0;
+
+    ProgressBar progressBar;
 
 
     private FragmentHomeBinding binding;
@@ -103,6 +106,9 @@ public class PlayersFragment extends Fragment {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference();
+
+        progressBar = root.findViewById(R.id.progressBar);
+
 
         //refresh();
 
@@ -168,6 +174,7 @@ public class PlayersFragment extends Fragment {
     {
 //        list =  new ArrayList<>();
 //        playersList = new ArrayList<>();
+        progressBar.setVisibility(View.VISIBLE);
 
         databaseReference.child(values.player_training).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -227,6 +234,7 @@ public class PlayersFragment extends Fragment {
                     }
                 });
                 //adapter.list = list;
+                progressBar.setVisibility(View.GONE);
                 adapter.notifyDataSetChanged();
             }
 
